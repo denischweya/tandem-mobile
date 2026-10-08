@@ -10,7 +10,6 @@
     "expo-linking": "~57.0.12",
     "expo-router": "~57.0.25",
     "expo-secure-store": "~57.0.4",
-    "expo-status-bar": "~57.0.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-hook-form": "^7.89.0",
@@ -38,7 +37,16 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings 0",
     "test": "jest",
-    "verify": "npm run typecheck && npm run lint && npm run test"
+    "format-check": "prettier --check .",
+    "doctor": "npx expo-doctor",
+    "verify": "npm run typecheck && npm run lint && npm run format-check && npm run test && npm run doctor"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "install": {
+      "exclude": [
+        "typescript"
+      ]
+    }
+  }
 }

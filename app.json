@@ -23,10 +23,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-secure-store"
-    ],
+    "plugins": ["expo-router", "expo-secure-store"],
     "extra": {
       "apiBaseUrl": "http://localhost:8000/api/v1"
     }

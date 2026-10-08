@@ -12,8 +12,7 @@ export default function Index() {
       </Text>
       <Text style={styles.body}>API: {apiBaseUrl}</Text>
       <Text style={styles.body}>
-        Nairobi: {parts.hour.toString().padStart(2, '0')}:
-        {parts.minute.toString().padStart(2, '0')}
+        Nairobi: {parts.hour.toString().padStart(2, '0')}:{parts.minute.toString().padStart(2, '0')}
       </Text>
     </View>
   );

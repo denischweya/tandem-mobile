@@ -4,6 +4,16 @@
     "strict": true,
     "noImplicitAny": true,
     "noUncheckedIndexedAccess": true,
+    // exactOptionalPropertyTypes must match tandem-shared and tandem-web (review finding
+    // I6, 2026-10-08 final whole-branch review): @tandem/shared ships raw TypeScript, so
+    // its Zod-vs-generated-type assignability harness is typechecked by each consumer's
+    // own compiler. A weaker option here would make that harness pass locally while it
+    // fails in tandem-shared's own CI (or vice versa) for the same code. Could not be
+    // centralized in a single base tsconfig all three repos extend: @tandem/shared is
+    // consumed as a pinned git-tag dependency (not a workspace), and only its "files"
+    // (src/, package.json, README.md) are installed — no tsconfig ships with it. Set
+    // explicitly here and in tandem-web instead; see spec §14.1.
+    "exactOptionalPropertyTypes": true,
     "paths": { "@/*": ["./src/*"] }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]

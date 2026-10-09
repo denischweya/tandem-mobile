@@ -6,7 +6,9 @@ export interface AvatarGroupMember {
   id: string;
   label: string;
   backgroundColor: string;
-  textColor?: string;
+  /** Explicit `undefined` accepted, not just omission - see `Avatar.textColor` and finding
+   * I6, spec §14.1. */
+  textColor?: string | undefined;
 }
 
 export interface AvatarGroupProps {

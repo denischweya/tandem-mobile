@@ -35,8 +35,10 @@ export function describeAvailability(status: Availability): AvailabilityAppearan
 
 interface StatusDotProps {
   status: Availability;
-  /** Diameter in px. Defaults to the reference's `.sd` size used on 52px avatars. */
-  size?: number;
+  /** Diameter in px. Defaults to the reference's `.sd` size used on 52px avatars. Explicit
+   * `undefined` (not just omission) is accepted because callers forward an upstream optional
+   * prop of the same shape - see finding I6, spec §14.1. */
+  size?: number | undefined;
   /** The colour the dot's border should blend into (the surface it sits on). */
   borderColor?: string;
 }

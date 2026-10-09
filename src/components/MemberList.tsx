@@ -8,7 +8,9 @@ export interface MemberListPerson {
   firstName: string;
   initials: string;
   avatarColor: string;
-  avatarTextColor?: string;
+  /** Explicit `undefined` accepted, not just omission - see `Avatar.textColor` and finding
+   * I6, spec §14.1. */
+  avatarTextColor?: string | undefined;
   availability: Availability;
 }
 

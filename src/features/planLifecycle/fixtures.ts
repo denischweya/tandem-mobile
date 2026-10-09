@@ -28,7 +28,9 @@ export interface VotingPerson {
   firstName: string;
   initials: string;
   avatarColor: string;
-  avatarTextColor?: string;
+  /** Explicit `undefined` accepted, not just omission - see `Avatar.textColor` and finding
+   * I6, spec §14.1. */
+  avatarTextColor?: string | undefined;
 }
 
 /** The signed-in user throughout this app's mocked data (Home, make-a-plan) is Denis - this
@@ -162,8 +164,10 @@ export interface CalendarOption {
   id: CalendarChoiceId;
   label: string;
   subtitle: string;
-  /** Flags the option screen 3f pre-selects - see `calendar.ts`'s `defaultCalendarChoice`. */
-  lastUsed?: boolean;
+  /** Flags the option screen 3f pre-selects - see `calendar.ts`'s `defaultCalendarChoice`.
+   * Explicit `undefined` accepted, not just omission, because test fixtures construct this
+   * conditionally - see finding I6, spec §14.1. */
+  lastUsed?: boolean | undefined;
 }
 
 export const CALENDAR_OPTIONS: CalendarOption[] = [
@@ -209,7 +213,9 @@ export interface PlanPerson {
   firstName: string;
   initials: string;
   avatarColor: string;
-  avatarTextColor?: string;
+  /** Explicit `undefined` accepted, not just omission - see `Avatar.textColor` and finding
+   * I6, spec §14.1. */
+  avatarTextColor?: string | undefined;
   /** "organiser" / "guest, hasn't replied" - never a reason, same privacy rule as everywhere
    * else in this app. */
   roleLabel?: string;
@@ -224,8 +230,9 @@ export interface CalendarSyncEntry {
   provider: string;
   status: CalendarSyncStatus;
   /** User-facing, non-technical reason - never a raw backend error (spec §135, hard
-   * constraint #4). */
-  failureReason?: string;
+   * constraint #4). Explicit `undefined` accepted, not just omission, because
+   * `retryCalendarSync` clears it in place - see finding I6, spec §14.1. */
+  failureReason?: string | undefined;
 }
 
 export interface PlanDetail {

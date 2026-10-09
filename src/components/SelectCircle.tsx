@@ -12,8 +12,10 @@ export interface SelectCircleProps {
   tone?: SelectCircleTone;
   size?: number;
   /** Omit for a locked, display-only mark (3b's "Required"/"Guest" rows, which this UI does
-   * not let you uncheck). Provide to make it a toggle (3b's "Optional" row; 3d's slot picker). */
-  onPress?: () => void;
+   * not let you uncheck). Provide to make it a toggle (3b's "Optional" row; 3d's slot picker).
+   * Explicit `undefined` accepted, not just omission, because callers compute this
+   * conditionally - see finding I6, spec §14.1. */
+  onPress?: (() => void) | undefined;
   accessibilityLabel: string;
 }
 

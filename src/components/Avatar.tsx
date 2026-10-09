@@ -8,7 +8,11 @@ export interface AvatarProps {
   /** Diameter in px. Defaults to the reference's base `.av` size. */
   size?: number;
   backgroundColor: string;
-  textColor?: string;
+  /** Explicit `undefined` (not just omission) is accepted because callers forward a
+   * lookup-table value (e.g. `Record<string, string>` indexed by id, which is `string |
+   * undefined` under `noUncheckedIndexedAccess`) where a missing entry means "use the
+   * default" - see finding I6, spec §14.1. */
+  textColor?: string | undefined;
   /** The surface this avatar sits on, used for its own ring and for the status dot's ring -
    * both borders must match whatever is behind the avatar (a card, the plain background,
    * another avatar it overlaps) or the ring reads as a visible seam instead of a gap. */

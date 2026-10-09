@@ -26,7 +26,9 @@ export interface Person {
   firstName: string;
   initials: string;
   avatarColor: string;
-  avatarTextColor?: string;
+  /** Explicit `undefined` accepted, not just omission - see `Avatar.textColor` and finding
+   * I6, spec §14.1. */
+  avatarTextColor?: string | undefined;
   /** Screen 3c's "3 of 4 people have calendars connected" line reads this - a person with no
    * connected calendar (the design's guest, Mary) is asked for their availability by
    * invite-link instead of it being read automatically. */

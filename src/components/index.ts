@@ -5,6 +5,16 @@ export { PlanCard, type PlanCardProps } from './PlanCard';
 export { ListRow, type ListRowProps } from './ListRow';
 export { MemberList, type MemberListPerson, type MemberListProps } from './MemberList';
 export { Button, type ButtonProps, type ButtonVariant } from './Button';
+export { IconButton, type IconButtonProps } from './IconButton';
+export { Chip, type ChipProps } from './Chip';
+export { SelectCircle, type SelectCircleProps, type SelectCircleTone } from './SelectCircle';
+export {
+  SegmentedControl,
+  type SegmentedControlOption,
+  type SegmentedControlProps,
+} from './SegmentedControl';
+export { DayStrip, type DayStripItem, type DayStripProps } from './DayStrip';
+export { StepHeader, type StepHeaderProps } from './StepHeader';
 export { TabBar, type TabBarItem, type TabBarProps } from './TabBar';
 export { ResponsiveContainer } from './ResponsiveContainer';
 export {
@@ -15,8 +25,13 @@ export {
 } from './StatusDot';
 export {
   ChevronRightIcon,
+  ChevronLeftIcon,
   CheckIcon,
   PlusIcon,
+  CloseIcon,
+  LinkIcon,
+  CalendarGlyphIcon,
+  LockIcon,
   HomeTabIcon,
   PlansTabIcon,
   PeopleTabIcon,

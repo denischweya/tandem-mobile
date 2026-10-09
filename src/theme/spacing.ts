@@ -34,4 +34,16 @@ export const sizes = {
   tabBarHeight: 84,
   avatarStackOverlap: 10,
   minTouchTarget: 44,
+
+  // Added for screens 3b/3c/3d (`.chip`, `.chk`, the segmented control, and the 3d
+  // candidate-row avatars) - the same "name every literal" rule as the block above.
+  chipHeight: 36,
+  selectCircleSm: 24,
+  selectCircleLg: 26,
+  segmentHeight: 38,
+  avatarXs: 28,
+  statusDotXs: 10,
+  stepBarWidth: 28,
+  stepBarHeight: 4,
+  flowHeaderIcon: 24,
 } as const;

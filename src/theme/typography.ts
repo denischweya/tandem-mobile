@@ -33,6 +33,13 @@ export const fontSize = {
   button: 17,
   planTitle: 30,
   heading: 34,
+
+  // Added for screens 3b/3c/3d: the "What are you planning?"/"When?"/"Best times" page
+  // titles (32), the "Who's coming?"/"How long?" section headings (26), and the 3d
+  // top-candidate card's date title (24).
+  screenTitle: 32,
+  sectionHeading: 26,
+  cardTitle: 24,
 } as const;
 
 /** `.t` from the reference: the condensed heading style, parameterised by size. */

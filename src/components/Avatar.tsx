@@ -15,6 +15,10 @@ export interface AvatarProps {
   borderColor?: string;
   /** Availability badge in the bottom-right corner, as seen in "Your people this week". */
   status?: Availability;
+  /** Diameter of the status-dot badge. Defaults to the reference's badge size for a 52px
+   * avatar ("Your people this week") - pass `sizes.statusDotXs` for the smaller 28px avatars
+   * screen 3d uses on a candidate slot's attendee row, so the badge stays proportional. */
+  statusDotSize?: number;
   /**
    * When this avatar is one of several carrying the same combined label (an AvatarGroup, or
    * a MemberList cell that labels its own wrapping element), the avatar itself must be
@@ -33,6 +37,7 @@ export function Avatar({
   textColor = colors.text,
   borderColor = colors.bg,
   status,
+  statusDotSize,
   decorative = false,
   accessibilityLabel,
 }: AvatarProps) {
@@ -56,7 +61,7 @@ export function Avatar({
       }}
     >
       <Text style={{ fontSize, fontWeight: '600', color: textColor }}>{label}</Text>
-      {status ? <StatusDot status={status} borderColor={borderColor} /> : null}
+      {status ? <StatusDot status={status} size={statusDotSize} borderColor={borderColor} /> : null}
     </View>
   );
 }

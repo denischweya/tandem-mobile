@@ -5,6 +5,8 @@ import {
   formatPlanDate,
   formatRelativeDays,
   formatScheduleLine,
+  formatTimeRange,
+  formatWeekdayAbbr,
 } from './formatting';
 
 const NAIROBI = 'Africa/Nairobi'; // UTC+3, no DST - the zone the Home dashboard fixture uses.
@@ -60,6 +62,26 @@ describe('formatPlanDate and formatClockTime', () => {
     expect(formatScheduleLine(new Date('2026-10-10T16:00:00Z'), NAIROBI, 'Westlands')).toBe(
       'Sat 10 Oct · 7:00 PM · Westlands',
     );
+  });
+});
+
+describe('formatWeekdayAbbr', () => {
+  it('renders just the abbreviated weekday for the day-strip ("Sat" for 10 Oct 2026)', () => {
+    expect(formatWeekdayAbbr(new Date('2026-10-10T16:00:00Z'), NAIROBI)).toBe('Sat');
+  });
+});
+
+describe('formatTimeRange', () => {
+  it('drops the repeated AM/PM suffix when both ends share a period ("7:00 – 9:00 PM")', () => {
+    const start = new Date('2026-10-10T16:00:00Z'); // 19:00 Nairobi
+    const end = new Date('2026-10-10T18:00:00Z'); // 21:00 Nairobi
+    expect(formatTimeRange(start, end, NAIROBI)).toBe('7:00 – 9:00 PM');
+  });
+
+  it('keeps both AM/PM suffixes when the range crosses noon', () => {
+    const start = new Date('2026-10-10T08:30:00Z'); // 11:30 Nairobi (AM)
+    const end = new Date('2026-10-10T10:00:00Z'); // 13:00 Nairobi (PM)
+    expect(formatTimeRange(start, end, NAIROBI)).toBe('11:30 AM – 1:00 PM');
   });
 });
 

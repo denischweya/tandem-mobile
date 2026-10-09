@@ -104,6 +104,35 @@ export function formatClockTime(instant: Date, timeZone: string): string {
   return `${hour12}:${minute.toString().padStart(2, '0')} ${period}`;
 }
 
+/** "Sat" - abbreviated weekday only, for the make-a-plan day strip (screen 3c), which shows
+ * the weekday and the day-of-month in two separate text rows rather than one combined
+ * string. */
+export function formatWeekdayAbbr(instant: Date, timeZone: string): string {
+  return weekdayName(toZonedParts(instant, timeZone), 'abbr');
+}
+
+/**
+ * "7:00 – 9:00 PM" - a candidate slot's time range (screen 3d). When both ends fall in the
+ * same AM/PM period, the reference drops the first period suffix rather than repeating it
+ * ("7:00 – 9:00 PM", not "7:00 PM – 9:00 PM"); a range that crosses noon/midnight keeps both
+ * ("11:30 AM – 1:00 PM").
+ */
+export function formatTimeRange(start: Date, end: Date, timeZone: string): string {
+  const startParts = toZonedParts(start, timeZone);
+  const endParts = toZonedParts(end, timeZone);
+  const startPeriod = startParts.hour < 12 ? 'AM' : 'PM';
+  const endPeriod = endParts.hour < 12 ? 'AM' : 'PM';
+
+  const clock = (parts: ZonedParts) => {
+    const hour12 = parts.hour % 12 === 0 ? 12 : parts.hour % 12;
+    return `${hour12}:${parts.minute.toString().padStart(2, '0')}`;
+  };
+
+  const startText =
+    startPeriod === endPeriod ? clock(startParts) : `${clock(startParts)} ${startPeriod}`;
+  return `${startText} – ${clock(endParts)} ${endPeriod}`;
+}
+
 /** "Sat 10 Oct · 7:00 PM · Westlands" - the full schedule line on `PlanCard`. */
 export function formatScheduleLine(instant: Date, timeZone: string, location: string): string {
   return `${formatPlanDate(instant, timeZone)} · ${formatClockTime(instant, timeZone)} · ${location}`;

@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
@@ -48,6 +49,7 @@ const TAB_ITEMS: TabBarItem[] = [
  */
 export function HomeScreen() {
   const insets = useSafeAreaInsets();
+  const router = useRouter();
   const data = getHomeDashboardFixture(mockNow);
   const { nextPlan } = data;
 
@@ -130,11 +132,9 @@ export function HomeScreen() {
       <Button
         label="Make a plan"
         icon={<PlusIcon size={sizes.plusIcon} color={colors.bg} />}
-        // No Create Plan screen exists in this slice yet (Home dashboard only) - the use
-        // case is already in the architecture (docs/specs/.../§8 Plans endpoints), just not
-        // sequenced into this plan. Left as a no-op rather than invented navigation, per the
-        // task constraint against inventing API/navigation nothing calls.
-        onPress={() => {}}
+        // The make-a-plan flow (screens 3b/3c/3d - `app/make-a-plan/*`) now exists, so this
+        // is real navigation rather than the no-op it was when only the Home screen existed.
+        onPress={() => router.push('/make-a-plan')}
         style={{ position: 'absolute', right: 20, bottom: sizes.tabBarHeight + insets.bottom + 20 }}
       />
 

@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   Button,
@@ -9,7 +9,7 @@ import {
   SegmentedControl,
   StepHeader,
 } from '@/components';
-import { colors, headingStyle, radii, spacing, subStyle } from '@/theme';
+import { colors, headingStyle, radii, sizes, spacing, subStyle } from '@/theme';
 import { getWeekStripDays } from './dates';
 import {
   mockNow,
@@ -31,6 +31,9 @@ const TIME_ZONE = 'Africa/Nairobi';
 export interface WhenScreenProps {
   onBack: () => void;
   onNext: () => void;
+  /** Opens screen 3h to connect (or review) the calendars this search reads from - the
+   * destination the "Change" row below did not have until this task. */
+  onChangeCalendars: () => void;
 }
 
 /**
@@ -38,12 +41,14 @@ export interface WhenScreenProps {
  * row, a 7-day strip, a daytime/evening/any-time segment, duration chips, and a read-only
  * summary of which calendars feed the next screen's availability search.
  *
- * "Using Google · Personal, Work" and the "Change" affordance are presentational only -
- * there is no calendar-connections screen in this slice to change *to* (same situation as
- * the Home report's "See all"), so "Change" renders as inert, labelled text rather than a
- * dead button, matching that established convention.
+ * "Using Google · Personal, Work" stays presentational - there is still no live binding from
+ * this summary line to the real per-calendar settings (`src/features/calendars`), only to
+ * what the fixture already said here; wiring the two together was out of scope for closing
+ * the dead end below (see this task's report, "ambiguity calls"). "Change" is no longer
+ * inert, though: it now opens screen 3h (`/settings/calendars/connect`) - "asked in context",
+ * exactly the screen this affordance existed to reach once a destination existed.
  */
-export function WhenScreen({ onBack, onNext }: WhenScreenProps) {
+export function WhenScreen({ onBack, onNext, onChangeCalendars }: WhenScreenProps) {
   const insets = useSafeAreaInsets();
   const quickChoiceId = usePlanDraftStore((s) => s.quickChoiceId);
   const selectedDayNumbers = usePlanDraftStore((s) => s.selectedDayNumbers);
@@ -147,7 +152,15 @@ export function WhenScreen({ onBack, onNext }: WhenScreenProps) {
             <Text style={{ flex: 1, fontWeight: '600', fontSize: 14, color: colors.text }}>
               Using Google · Personal, Work
             </Text>
-            <Text style={{ fontSize: 13, color: colors.accent[700] }}>Change</Text>
+            <Pressable
+              onPress={onChangeCalendars}
+              accessibilityRole="button"
+              accessibilityLabel="Change calendars"
+              hitSlop={8}
+              style={{ minHeight: sizes.minTouchTarget, justifyContent: 'center' }}
+            >
+              <Text style={{ fontSize: 13, color: colors.accent[700] }}>Change</Text>
+            </Pressable>
           </View>
           <Text style={[subStyle, { lineHeight: 18 }]}>
             {formatCalendarCoverageSentence(coverage)}

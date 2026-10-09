@@ -46,6 +46,11 @@ export const fontSize = {
   // detail screen's "Dinner" title (40, bigger than any existing heading so far).
   confirmHeadline: 28,
   planDetailTitle: 40,
+
+  // Added for screen 3h: the "Connect your calendar..." subhead under its 34px headline,
+  // bigger than `body` (15) but with no other screen's heading - the reference's own literal
+  // 16px.
+  connectSubhead: 16,
 } as const;
 
 /** `.t` from the reference: the condensed heading style, parameterised by size. */

@@ -5,6 +5,11 @@ export interface SwitchProps {
   value: boolean;
   onValueChange: (value: boolean) => void;
   accessibilityLabel: string;
+  /** Renders the track dimmed (the reference's `opacity:.45`) and ignores presses. Added for
+   * screen 3i's calendars whose account has lapsed ("Sign in again") - there is nothing valid
+   * to toggle until the account is reauthenticated, so the control must not look selectable,
+   * not just look unselected. */
+  disabled?: boolean;
 }
 
 /**
@@ -17,16 +22,22 @@ export interface SwitchProps {
  * axis (hard constraint #5) - `hitSlop` tops the tappable area up to 44px vertically without
  * resizing the track, the same technique `SegmentedControl` uses for its own under-height row.
  */
-export function Switch({ value, onValueChange, accessibilityLabel }: SwitchProps) {
+export function Switch({
+  value,
+  onValueChange,
+  accessibilityLabel,
+  disabled = false,
+}: SwitchProps) {
   const verticalHitSlop = Math.ceil((sizes.minTouchTarget - sizes.toggleTrackHeight) / 2);
   const thumbInset = 3;
 
   return (
     <Pressable
       onPress={() => onValueChange(!value)}
+      disabled={disabled}
       accessibilityRole="switch"
       accessibilityLabel={accessibilityLabel}
-      accessibilityState={{ checked: value }}
+      accessibilityState={{ checked: value, disabled }}
       hitSlop={{ top: verticalHitSlop, bottom: verticalHitSlop, left: 8, right: 8 }}
       style={{
         width: sizes.toggleTrackWidth,
@@ -34,6 +45,7 @@ export function Switch({ value, onValueChange, accessibilityLabel }: SwitchProps
         borderRadius: radii.pill,
         backgroundColor: value ? colors.accent2[500] : colors.neutral[300],
         justifyContent: 'center',
+        opacity: disabled ? 0.45 : 1,
       }}
     >
       <View

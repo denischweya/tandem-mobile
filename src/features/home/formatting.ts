@@ -138,6 +138,32 @@ export function formatScheduleLine(instant: Date, timeZone: string, location: st
   return `${formatPlanDate(instant, timeZone)} · ${formatClockTime(instant, timeZone)} · ${location}`;
 }
 
+/** "6 PM" / "6:05 PM" - 12-hour clock, dropping the ":00" minutes entirely when the instant
+ * falls exactly on the hour; otherwise identical to `formatClockTime`. Added for screen 3e's
+ * "Voting · closes Thu 6 PM" tag and candidate rows ("Sat 10 Oct · 4 PM") - the reference
+ * drops on-the-hour minutes in both places, unlike `PlanCard`'s schedule line, which always
+ * shows them ("7:00 PM"). */
+export function formatHourLabel(instant: Date, timeZone: string): string {
+  const { hour, minute } = toZonedParts(instant, timeZone);
+  const period = hour < 12 ? 'AM' : 'PM';
+  const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+  return minute === 0
+    ? `${hour12} ${period}`
+    : `${hour12}:${minute.toString().padStart(2, '0')} ${period}`;
+}
+
+/** "Thu 6 PM" - screen 3e's voting-deadline tag: abbreviated weekday + `formatHourLabel`. */
+export function formatVotingDeadline(instant: Date, timeZone: string): string {
+  return `${formatWeekdayAbbr(instant, timeZone)} ${formatHourLabel(instant, timeZone)}`;
+}
+
+/** "Fri 9 Oct, 7:00 PM" - screen 3g's reminder lines: the compact date and clock time joined
+ * by a comma, rather than `formatScheduleLine`'s " · " (which also expects a trailing
+ * location this string has no room for). */
+export function formatDateTimeComma(instant: Date, timeZone: string): string {
+  return `${formatPlanDate(instant, timeZone)}, ${formatClockTime(instant, timeZone)}`;
+}
+
 /**
  * "in 5 days" / "tomorrow" / "today" / "N days ago", counting whole calendar days between
  * `from` and `to` *in the given zone* - not a raw millisecond difference, which would give

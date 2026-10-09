@@ -39,9 +39,14 @@ import {
 
 export interface BestTimesScreenProps {
   onBack: () => void;
-  /** Called once the user has either confirmed a time or asked everyone to vote - see this
-   * file's header comment for why both end the flow the same way in this slice. */
-  onDone: () => void;
+  /** "Confirm" - called with the selected candidate's slot id, so the caller (the route in
+   * `app/make-a-plan/best-times.tsx`) can carry it to screen 3f (`/plan/confirm`) via
+   * `usePlanDraftStore`'s `confirmedSlotId`. */
+  onConfirm: (slotId: string) => void;
+  /** "Let everyone vote" - takes no slot id: screen 3e is reached from here but renders its
+   * own independent mocked poll rather than a live transformation of the ranked candidates
+   * (see `VotingScreen`'s header comment for why). */
+  onVote: () => void;
 }
 
 /** "evenings" for the segmented "Evening" choice, matching the reference's summary line
@@ -75,7 +80,7 @@ function confirmButtonLabel(ranked: RankedSlot): string {
  * shared. Never event details.") is rendered verbatim as a real, standing confirmation of
  * that rule, not just a design note.
  */
-export function BestTimesScreen({ onBack, onDone }: BestTimesScreenProps) {
+export function BestTimesScreen({ onBack, onConfirm, onVote }: BestTimesScreenProps) {
   const insets = useSafeAreaInsets();
   const categoryId = usePlanDraftStore((s) => s.categoryId);
   const quickChoiceId = usePlanDraftStore((s) => s.quickChoiceId);
@@ -173,8 +178,13 @@ export function BestTimesScreen({ onBack, onDone }: BestTimesScreenProps) {
           paddingTop: spacing.md,
         }}
       >
-        <Button label={selected ? confirmButtonLabel(selected) : 'Confirm'} onPress={onDone} />
-        <Button label="Let everyone vote" variant="secondary" onPress={onDone} />
+        <Button
+          label={selected ? confirmButtonLabel(selected) : 'Confirm'}
+          onPress={() => {
+            if (selected) onConfirm(selected.slot.id);
+          }}
+        />
+        <Button label="Let everyone vote" variant="secondary" onPress={onVote} />
       </View>
     </ResponsiveContainer>
   );

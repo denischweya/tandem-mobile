@@ -315,6 +315,174 @@ export function GroupsTabIcon({ size, color }: IconProps) {
   );
 }
 
+/** Three-dot "overflow menu" glyph for screen 3e's header. Decorative only - there is no
+ * overflow menu behind it in this slice (see `VotingScreen`'s header comment), the same
+ * "render disabled, not wired to nowhere" treatment `TabBar` already uses. */
+export function MoreHorizontalIcon({ size, color }: IconProps) {
+  const dot = size * 0.15;
+  return (
+    <View
+      style={{
+        width: size,
+        height: size,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      {[0, 1, 2].map((key) => (
+        <View
+          key={key}
+          style={{ width: dot, height: dot, borderRadius: dot / 2, backgroundColor: color }}
+        />
+      ))}
+    </View>
+  );
+}
+
+/** Upload/share glyph (an arrow into a tray) for screen 3g's header. Simplified, not a
+ * pixel-faithful redraw of the reference's path - same approach as every other icon here. */
+export function ShareIcon({ size, color }: IconProps) {
+  const arm = size * 0.3;
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center' }}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          width: 2.25,
+          height: size * 0.46,
+          backgroundColor: color,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.08,
+          width: arm,
+          height: arm,
+          borderTopWidth: 2.25,
+          borderLeftWidth: 2.25,
+          borderTopColor: color,
+          borderLeftColor: color,
+          transform: [{ rotate: '45deg' }],
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: size,
+          height: size * 0.34,
+          borderWidth: 2.25,
+          borderTopWidth: 0,
+          borderColor: color,
+          borderRadius: 3,
+        }}
+      />
+    </View>
+  );
+}
+
+/** Speech-bubble glyph for screen 3g's header. A rounded body plus a small tail, built from
+ * borders rather than the reference's SVG path. */
+export function ChatIcon({ size, color }: IconProps) {
+  return (
+    <View style={{ width: size, height: size }}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: size,
+          height: size * 0.74,
+          borderWidth: 2.25,
+          borderColor: color,
+          borderRadius: size * 0.4,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: size * 0.08,
+          left: size * 0.2,
+          width: size * 0.2,
+          height: size * 0.2,
+          backgroundColor: color,
+          transform: [{ rotate: '45deg' }],
+        }}
+      />
+    </View>
+  );
+}
+
+/** Attachment-clip glyph for screen 3e's chat composer. A single rounded-rect ring rotated
+ * onto the diagonal - a deliberately simplified stand-in for the reference's paperclip path
+ * (the same "reads as the thing at a glance, not pixel-faithful" rule every icon here follows). */
+export function PaperclipIcon({ size, color }: IconProps) {
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
+      <View
+        style={{
+          width: size * 0.38,
+          height: size * 0.78,
+          borderWidth: 2.25,
+          borderColor: color,
+          borderRadius: size * 0.19,
+          transform: [{ rotate: '40deg' }],
+        }}
+      />
+    </View>
+  );
+}
+
+/** Filled warning-triangle glyph for screen 3g's "Couldn't add to Work" sync-failure card
+ * (hard constraint #4: the failure must be visibly flagged, not just worded). A solid
+ * CSS-border triangle with a cut-out exclamation mark, rather than the reference's outlined
+ * SVG path - the cut-out needs a colour that contrasts with the solid fill, so this one icon
+ * takes that contrast colour as a third prop instead of reusing the plain two-prop shape. */
+export function WarningIcon({ size, color, markColor }: IconProps & { markColor: string }) {
+  const triangle = size * 0.92;
+  return (
+    <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'flex-end' }}>
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          width: 0,
+          height: 0,
+          borderLeftWidth: triangle / 2,
+          borderRightWidth: triangle / 2,
+          borderBottomWidth: triangle * 0.86,
+          borderLeftColor: 'transparent',
+          borderRightColor: 'transparent',
+          borderBottomColor: color,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          top: size * 0.4,
+          width: 2.5,
+          height: size * 0.18,
+          borderRadius: 1.5,
+          backgroundColor: markColor,
+        }}
+      />
+      <View
+        style={{
+          position: 'absolute',
+          bottom: size * 0.16,
+          width: 2.5,
+          height: 2.5,
+          borderRadius: 1.5,
+          backgroundColor: markColor,
+        }}
+      />
+    </View>
+  );
+}
+
 export function ProfileTabIcon({ size, color }: IconProps) {
   return (
     <View style={{ width: size, height: size, alignItems: 'center', overflow: 'hidden' }}>

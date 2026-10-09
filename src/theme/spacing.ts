@@ -46,4 +46,13 @@ export const sizes = {
   stepBarWidth: 28,
   stepBarHeight: 4,
   flowHeaderIcon: 24,
+
+  // Added for screens 3e/3f/3g (the vote-chip trio, the `.tg` reminder toggle, and the
+  // `.tag` status pill) - same rule.
+  voteChipSize: 40,
+  toggleTrackWidth: 44,
+  toggleTrackHeight: 26,
+  toggleThumb: 20,
+  tagHeight: 28,
+  headerActionIcon: 22,
 } as const;

@@ -40,6 +40,12 @@ export const fontSize = {
   screenTitle: 32,
   sectionHeading: 26,
   cardTitle: 24,
+
+  // Added for screens 3e/3f/3g: the voting screen's "Football" title (34, same as `heading`
+  // - reused, not restated), the confirm sheet's "Dinner is on" headline (28), and the plan
+  // detail screen's "Dinner" title (40, bigger than any existing heading so far).
+  confirmHeadline: 28,
+  planDetailTitle: 40,
 } as const;
 
 /** `.t` from the reference: the condensed heading style, parameterised by size. */

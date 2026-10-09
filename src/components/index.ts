@@ -17,6 +17,8 @@ export { DayStrip, type DayStripItem, type DayStripProps } from './DayStrip';
 export { StepHeader, type StepHeaderProps } from './StepHeader';
 export { TabBar, type TabBarItem, type TabBarProps } from './TabBar';
 export { ResponsiveContainer } from './ResponsiveContainer';
+export { Tag, type TagTone, type TagProps } from './Tag';
+export { Switch, type SwitchProps } from './Switch';
 export {
   StatusDot,
   describeAvailability,
@@ -37,4 +39,9 @@ export {
   PeopleTabIcon,
   GroupsTabIcon,
   ProfileTabIcon,
+  MoreHorizontalIcon,
+  ShareIcon,
+  ChatIcon,
+  PaperclipIcon,
+  WarningIcon,
 } from './icons';

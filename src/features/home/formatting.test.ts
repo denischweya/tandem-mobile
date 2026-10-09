@@ -1,11 +1,14 @@
 import {
   formatClockTime,
+  formatDateTimeComma,
   formatGreeting,
   formatHeaderDate,
+  formatHourLabel,
   formatPlanDate,
   formatRelativeDays,
   formatScheduleLine,
   formatTimeRange,
+  formatVotingDeadline,
   formatWeekdayAbbr,
 } from './formatting';
 
@@ -82,6 +85,34 @@ describe('formatTimeRange', () => {
     const start = new Date('2026-10-10T08:30:00Z'); // 11:30 Nairobi (AM)
     const end = new Date('2026-10-10T10:00:00Z'); // 13:00 Nairobi (PM)
     expect(formatTimeRange(start, end, NAIROBI)).toBe('11:30 AM – 1:00 PM');
+  });
+});
+
+describe('formatHourLabel', () => {
+  it('drops ":00" on an exact hour ("6 PM")', () => {
+    expect(formatHourLabel(new Date('2026-10-08T15:00:00Z'), NAIROBI)).toBe('6 PM');
+  });
+
+  it('keeps the minutes when not on the hour ("6:05 PM")', () => {
+    expect(formatHourLabel(new Date('2026-10-08T15:05:00Z'), NAIROBI)).toBe('6:05 PM');
+  });
+
+  it('renders a morning hour as AM ("10 AM")', () => {
+    expect(formatHourLabel(new Date('2026-10-11T07:00:00Z'), NAIROBI)).toBe('10 AM');
+  });
+});
+
+describe('formatVotingDeadline', () => {
+  it('renders "Thu 6 PM" for the voting fixture\'s close time', () => {
+    expect(formatVotingDeadline(new Date('2026-10-08T15:00:00Z'), NAIROBI)).toBe('Thu 6 PM');
+  });
+});
+
+describe('formatDateTimeComma', () => {
+  it('joins the compact date and clock time with a comma ("Fri 9 Oct, 7:00 PM")', () => {
+    expect(formatDateTimeComma(new Date('2026-10-09T16:00:00Z'), NAIROBI)).toBe(
+      'Fri 9 Oct, 7:00 PM',
+    );
   });
 });
 

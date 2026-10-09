@@ -40,6 +40,11 @@ export interface PlanDraftState {
   timeOfDayId: TimeOfDayId;
   durationId: DurationOptionId;
 
+  /** The candidate slot id the user actually confirmed on screen 3d - set just before
+   * navigating to screen 3f (`app/plan/confirm.tsx`), so that screen renders whichever time
+   * was really picked rather than always assuming the top-ranked one. `null` until then. */
+  confirmedSlotId: string | null;
+
   setCategory: (categoryId: string) => void;
   setPlanName: (name: string) => void;
   selectGroup: (groupId: string) => void;
@@ -52,6 +57,7 @@ export interface PlanDraftState {
   toggleDay: (dayOfMonth: number) => void;
   setTimeOfDay: (id: TimeOfDayId) => void;
   setDuration: (id: DurationOptionId) => void;
+  setConfirmedSlot: (slotId: string) => void;
   reset: () => void;
 }
 
@@ -67,6 +73,7 @@ const initialState = {
   ).sort((a, b) => a - b),
   timeOfDayId: 'evening' as TimeOfDayId,
   durationId: '2h' as DurationOptionId,
+  confirmedSlotId: null as string | null,
 };
 
 export const usePlanDraftStore = create<PlanDraftState>((set, get) => ({
@@ -113,6 +120,7 @@ export const usePlanDraftStore = create<PlanDraftState>((set, get) => ({
 
   setTimeOfDay: (timeOfDayId) => set({ timeOfDayId }),
   setDuration: (durationId) => set({ durationId }),
+  setConfirmedSlot: (confirmedSlotId) => set({ confirmedSlotId }),
 
   reset: () =>
     set({

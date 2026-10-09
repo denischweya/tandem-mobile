@@ -102,6 +102,10 @@ export function HomeScreen() {
             attendees={attendees}
             attendeesLabel={attendeesLabel}
             inCalendar={nextPlan.inCalendar}
+            // Screen 3g (the plan detail view - people, calendar sync status, reminders) now
+            // exists, so the card is a real navigation target rather than the purely
+            // informational summary it was when there was nowhere for it to lead.
+            onPress={() => router.push(`/plan/${nextPlan.id}`)}
           />
         </View>
 
